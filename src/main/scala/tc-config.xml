@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tc:tc-config xmlns:tc="http://www.terracotta.org/config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.terracotta.org/schema/terracotta-4.xsd">
+
+	<clients>
+		<modules>
+			<repository>
+				file:///C:/Documents and Settings/lpant/.m2/repository
+			</repository>
+			<module name="clustered-scala-actors-2.6.1" version="2.6.1" />
+		</modules>
+
+		<dso>
+			<debugging>
+				<instrumentation-logging>
+					<locks>true</locks>
+				</instrumentation-logging>
+				<runtime-logging>
+					<lock-debug>true</lock-debug>
+				</runtime-logging>
+				<runtime-output-options>
+					<auto-lock-details>true</auto-lock-details>
+				</runtime-output-options>
+				<!-- 
+					<runtime-logging>
+					<non-portable-dump>true</non-portable-dump>
+					</runtime-logging>
+				-->
+			</debugging>
+		</dso>
+	</clients>
+	<application>
+		<dso>
+			<!-- 
+				Add patterns matching your application specific classes and all other 
+				classes that might be either held on to by the actor or sent in a message.
+			-->
+			<instrumented-classes>
+				<include>
+					<class-expression>sample.*</class-expression>
+				</include>
+				<include>
+					<class-expression>scala.List</class-expression>
+				</include>
+				<include>
+					<class-expression>
+						scala.$colon$colon
+					</class-expression>
+				</include>
+				<include>
+					<class-expression>scala.Nil$</class-expression>
+				</include>
+				<include>
+					<class-expression>scala.actors.*</class-expression>
+				</include>
+				<include>
+					<class-expression>
+						scala.runtime.IntRef
+					</class-expression>
+				</include>
+				<include>
+					<class-expression>
+						scala.collection.mutable.HashMap
+					</class-expression>
+				</include>
+				<include>
+					<class-expression>
+						scala.runtime.BoxedAnyArray
+					</class-expression>
+				</include>
+				<include>
+					<class-expression>
+						scala.runtime.BoxedArray
+					</class-expression>
+				</include>
+				<include>
+					<class-expression>
+						scala.collection.mutable.DefaultEntry
+					</class-expression>
+				</include>
+				<include>
+					<class-expression>scala.Tuple3</class-expression>
+				</include>
+			</instrumented-classes>
+
+			<transient-fields>
+				<field-name>
+					sample.Master.scala$actors$Actor$$waitingFor
+				</field-name>
+				<field-name>
+					sample.Worker.scala$actors$Actor$$waitingFor
+				</field-name>
+				<field-name>sample.Master._log</field-name>
+				<field-name>sample.Worker._log</field-name>
+				<field-name>scala.actors.ActorProxy._log</field-name>
+				<field-name>sample.Master._namedLog</field-name>
+				<field-name>sample.Worker._namedLog</field-name>
+				<field-name>
+					scala.actors.ActorProxy._namedLog
+				</field-name>
+
+			</transient-fields>
+		</dso>
+	</application>
+</tc:tc-config>
